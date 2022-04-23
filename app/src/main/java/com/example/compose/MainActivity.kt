@@ -7,12 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTheme {
-                MessageCard(msg = Message("Jan kowalski", "Jam jest Jan."))
+                Conversation(messages = SampleData.conversationSample)
             }
         }
     }
@@ -72,6 +75,7 @@ fun MessageCard(msg: Message) {
     showBackground = true,
     name = "Dark Mode"
 )
+
 @Composable
 fun PreviewMessageCard() {
     ComposeTheme {
@@ -83,16 +87,29 @@ fun PreviewMessageCard() {
     }
 }
 
-/*
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) { MessageCard(it) }
+    }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun DefaultPreview() {
+fun PreviewConversation() {
     ComposeTheme {
-        Greeting("Android")
+        Conversation(messages = SampleData.conversationSample)
     }
-}*/
+}
+
+/*
+@Composable
+fun Conversation(messages: List<Message>) {
+    LazyColumn {
+        items(messages) { message -> MessageCard(msg = message) }
+    }
+}
+
+*/
+
+
